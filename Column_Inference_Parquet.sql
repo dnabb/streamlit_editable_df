@@ -11,7 +11,6 @@ PUT 'file://C:/Users/DanieleAbbatelli/OneDrive/Code/streamlit_editable_df/syntet
 
 LIST @SYNTETIC_DATASET_STG;
 
-
 -- Check if we can infer the schema
 SELECT *
   FROM TABLE(
@@ -44,7 +43,7 @@ MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE
 CREATE OR REPLACE SEQUENCE SEQ1;
 
 -- Creates the final table
-CREATE OR REPLACE TABLE SYNTETIC_DATASET_T AS
+CREATE OR REPLACE TRANSIENT TABLE SYNTETIC_DATASET_T AS
 SELECT
   SEQ1.NEXTVAL AS PK,
   *
