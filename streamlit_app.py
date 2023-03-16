@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import snowflake.connector
+from snowflake.connector.pandas_tools import write_pandas
 
 st.set_page_config(layout="wide")
 
@@ -24,7 +25,7 @@ def save_to_snowflake(df):
     try:
         cur = con.cursor()
         cur.execute('CREATE TEMPORARY TABLE SYNTETIC_DATASET_EDITED LIKE SYNTETIC_DATASET_T')
-        success, nchunks, nrows, output = snowflake.connector.pandas_tools.write_pandas(con, df, 'SYNTETIC_DATASET_EDITED')
+        success, nchunks, nrows, output = write_pandas(con, df, 'SYNTETIC_DATASET_EDITED')
         if success:
             cur.execute('CREATE OR REPLACE TABLE SYNTETIC_DATASET_T CLONE SYNTETIC_DATASET_EDITED')
             st.session_state['data_editor'] = {}
