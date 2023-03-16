@@ -18,14 +18,15 @@ def get_from_snowflake():
         con.close()
     return df
 
-# Very inefficient "truncate and reload everything" logic
+# Very inefficient "full reload" logic
 def save_to_snowflake(df):
     con = snowflake.connector.connect(**st.secrets["snowflake"])
     try:
         cur = con.cursor()
-        cur.execute('TRUNCATE TABLE SYNTETIC_DATASET_T')
-        success, nchunks, nrows, output = snowflake.connector.write_pandas(con, df, 'SYNTETIC_DATASET_T')
+        cur.execute('CREATE TEMPORARY TABLE SYNTETIC_DATASET_EDITED LIKE SYNTETIC_DATASET_T')
+        success, nchunks, nrows, output = snowflake.connector.write_pandas(con, df, 'SYNTETIC_DATASET_EDITED')
         if success:
+            cur.execute('CREATE OR REPLACE TABLE SYNTETIC_DATASET_T CLONE SYNTETIC_DATASET_EDITED')
             st.session_state['data_editor'] = {}
     finally:
         con.close()
