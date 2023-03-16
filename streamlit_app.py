@@ -6,7 +6,7 @@ st.title('Editable dataframe test app')
 st.text('This app just allows you to edit a large dataset 📝 (60 cols x 200k rows) hosted on Snowflake ❄️')
 
 def get_from_snowflake():
-    con = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    con = snowflake.connector.connect(**st.secrets["snowflake"])
     try:
         cur = con.cursor()
         cur.execute('SELECT * FROM SYNTETIC_DATASET')
