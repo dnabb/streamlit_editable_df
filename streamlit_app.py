@@ -9,7 +9,7 @@ def get_from_snowflake():
     con = snowflake.connector.connect(**st.secrets["snowflake"])
     try:
         cur = con.cursor()
-        cur.execute('SELECT * FROM SYNTETIC_DATASET')
+        cur.execute('SELECT * FROM SYNTETIC_DATASET_T')
         df = cur.fetch_pandas_all().set_index('PK')
 
     finally:
