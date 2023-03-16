@@ -39,3 +39,5 @@ edited_df = st.experimental_data_editor(df, key='data_editor')
 
 if st.button('Save to Snowflake!'):
     save_to_snowflake(edited_df)
+    df = edited_df
+    return
