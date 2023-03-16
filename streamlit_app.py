@@ -20,15 +20,13 @@ def get_from_snowflake():
 
 # Very inefficient "truncate and reload" logic
 def save_to_snowflake(df):
-    con = snowflake.connector.connect(**st.secrets["snowflake"]
+    con = snowflake.connector.connect(**st.secrets["snowflake"])
     try:
         cur = con.cursor()
         cur.execute('TRUNCATE TABLE SYNTETIC_DATASET_T')
         success, nchunks, nrows, output = write_pandas(con, df, 'SYNTETIC_DATASET_T')
-
         if success:
             st.session_state['data_editor'] = {}
-
     finally:
         con.close()
     return success
