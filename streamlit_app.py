@@ -28,7 +28,6 @@ def save_to_snowflake(df):
         success, nchunks, nrows, output = write_pandas(con, df, 'SYNTETIC_DATASET_EDITED')
         if success:
             cur.execute('CREATE OR REPLACE TRANSIENT TABLE SYNTETIC_DATASET_T CLONE SYNTETIC_DATASET_EDITED')
-            st.session_state['data_editor'] = {}
     finally:
         con.close()
     return success
@@ -36,7 +35,7 @@ def save_to_snowflake(df):
 df = get_from_snowflake()
 
 edited_df = st.experimental_data_editor(df, key='data_editor')
-st.write(st.session_state["data_editor"])
+# st.write(st.session_state["data_editor"])
 
 if st.button('Save to Snowflake!'):
     save_to_snowflake(edited_df)
