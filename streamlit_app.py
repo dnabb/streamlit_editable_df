@@ -19,6 +19,9 @@ def save_to_snowflake():
     pass
 
 df = get_from_snowflake()
+st.write(df.columns)
+st.write(df.index)
+
 edited_df = st.experimental_data_editor(df, key='data_editor')
 st.write(st.session_state["data_editor"])
 
