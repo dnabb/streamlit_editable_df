@@ -27,7 +27,7 @@ def save_to_snowflake(df):
         cur.execute('CREATE TEMPORARY TABLE SYNTETIC_DATASET_EDITED LIKE SYNTETIC_DATASET_T')
         success, nchunks, nrows, output = write_pandas(con, df, 'SYNTETIC_DATASET_EDITED')
         if success:
-            cur.execute('CREATE OR REPLACE TABLE SYNTETIC_DATASET_T CLONE SYNTETIC_DATASET_EDITED')
+            cur.execute('CREATE OR REPLACE TRANSIENT TABLE SYNTETIC_DATASET_T CLONE SYNTETIC_DATASET_EDITED')
             st.session_state['data_editor'] = {}
     finally:
         con.close()
