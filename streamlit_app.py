@@ -22,5 +22,5 @@ df = get_from_snowflake()
 edited_df = st.experimental_data_editor(df, key='data_editor')
 st.write(st.session_state["data_editor"])
 
-if streamlit.button('Save to Snowflake!'):
-    save_to_snowflake()
+# if streamlit.button('Save to Snowflake!'):
+#     save_to_snowflake()
