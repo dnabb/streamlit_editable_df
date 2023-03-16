@@ -10,7 +10,8 @@ def get_from_snowflake():
     try:
         cur = con.cursor()
         cur.execute('SELECT * FROM SYNTETIC_DATASET')
-        df = cur.fetchall()
+        df = cur.fetch_pandas_all()
+
     finally:
         con.close()
     return df
